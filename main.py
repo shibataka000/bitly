@@ -1,6 +1,5 @@
 import BaseHTTPServer as B,cgi,hashlib as h,random as r
-d={"":""}
-p=8080
+d,p={"":""},8080
 def g(f):
     s=""
     while s in d:
