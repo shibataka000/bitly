@@ -4,7 +4,7 @@ p = 8080
 def get_su(fu):
     su = ""
     while su in d:
-        su = h.md5(fu+str(r.random())).hexdigest()[:5]
+        su = h.md5(fu+str(r.random())).hexdigest()[:9]
     d["/"+su] = fu
     return su
 class I(B.BaseHTTPRequestHandler):
