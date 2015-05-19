@@ -1,37 +1,33 @@
 # coding: utf-8
 
-import BaseHTTPServer
-import cgi
-import hashlib
-import random
+import BaseHTTPServer as B, cgi, hashlib as h, random as r
 
-db = {"":""}
-port = 8080
+d = {"":""}
+p = 8080
 
-def get_short_url(full_url):
-    short_url = ""
-    while short_url in db:
-        short_url = hashlib.md5(full_url+str(random.random())).hexdigest()[:5]
-    db["/"+short_url] = full_url
-    return short_url
+def get_su(fu):
+    su = ""
+    while su in d:
+        su = h.md5(fu+str(r.random())).hexdigest()[:5]
+    d["/"+su] = fu
+    return su
 
-class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class I(B.BaseHTTPRequestHandler):
     def do_GET(self):
-        print db
+        print d
         print self.path[1:]
-        if self.path in db:
+        if self.path in d:
             self.send_response(301)
-            self.send_header("Location", db[self.path])
+            self.send_header("Location", d[self.path])
             self.end_headers()
         else:
             self.send_error(500)
 
     def do_POST(self):
-        form = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={"REQUEST_METHOD":"POST"})
-        url = form.file.read()
+        fu = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={"REQUEST_METHOD":"POST"}).file.read()
         self.send_response(200)
         self.end_headers()
-        self.wfile.write("http://localhost:"+str(port)+"/"+get_short_url(url))
+        self.wfile.write("http://localhost:"+str(p)+"/"+get_su(fu))
 
 if __name__=="__main__":
-    BaseHTTPServer.HTTPServer(("",port), MyHandler).serve_forever()
+    B.HTTPServer(("",p), I).serve_forever()
