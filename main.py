@@ -31,7 +31,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         url = form.file.read()
         self.send_response(200)
         self.end_headers()
-        self.wfile.write("http://localhost:"+str(port)+"/"+get_short_url(url)+" ")
+        self.wfile.write("http://localhost:"+str(port)+"/"+get_short_url(url))
 
 if __name__=="__main__":
     BaseHTTPServer.HTTPServer(("",port), MyHandler).serve_forever()
