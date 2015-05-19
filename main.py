@@ -14,8 +14,6 @@ def get_su(fu):
 
 class I(B.BaseHTTPRequestHandler):
     def do_GET(self):
-        print d
-        print self.path[1:]
         if self.path in d:
             self.send_response(301)
             self.send_header("Location", d[self.path])
