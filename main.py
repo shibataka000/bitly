@@ -17,6 +17,5 @@ class I(B.BaseHTTPRequestHandler):
         d.set("/"+s,f)
         self.send_response(200)
         self.end_headers()
-        print s
         self.wfile.write("http://%s:%d/%s"%(u,p,s))
 B.HTTPServer(("",p),I).serve_forever()
